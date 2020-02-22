@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class DoorOpenDevice : MonoBehaviour
 {
     [SerializeField] private Vector3 dPos;
@@ -22,9 +22,11 @@ public class DoorOpenDevice : MonoBehaviour
     public void Operate() {
         if (_open) {
             Vector3 pos = transform.position - dPos;
-            transform.position = pos;
+            transform.DOMove( pos, 1 );
+            // transform.position = pos;
         } else {
             Vector3 pos = transform.position + dPos;
+            transform.DOMove( pos, 1 );
             transform.position = pos;
         }
         _open = !_open;
