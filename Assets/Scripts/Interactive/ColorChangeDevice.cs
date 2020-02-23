@@ -4,11 +4,11 @@ using UnityEngine;
 using DG.Tweening;
 public class ColorChangeDevice : MonoBehaviour
 {
-    private Renderer renderer;
+    private Renderer _renderer;
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -23,8 +23,8 @@ public class ColorChangeDevice : MonoBehaviour
         // Color origin = GetComponent<Renderer>().material.color;
         // GetComponent<Renderer>().material.color = Color.Lerp( origin, random, 1 );
         DOTween.To( 
-            () => renderer.material.color, 
-            toColor => renderer.material.color = toColor,
+            () => _renderer.material.color, 
+            toColor => _renderer.material.color = toColor,
             random, 1f);
     }
 }
