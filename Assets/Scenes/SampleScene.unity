@@ -4186,7 +4186,6 @@ GameObject:
   - component: {fileID: 1735160672}
   - component: {fileID: 1735160671}
   - component: {fileID: 1735160674}
-  - component: {fileID: 1735160675}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4273,21 +4272,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 419436423}
   rotSpeed: 1.5
---- !u!114 &1735160675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1735160670}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d47bd16fcb7e41745bdc67c0b677bd0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axes: 0
-  sensitivityHor: 9
-  sensitivityVert: 9
   minimumVert: -45
   maximumVert: 45
 --- !u!1 &1736283155
