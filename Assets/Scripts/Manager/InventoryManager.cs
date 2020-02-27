@@ -8,12 +8,14 @@ public class InventoryManager : MonoBehaviour, IGameManager
     public string equippedItem {get; private set;}
     // property can be read from anywhere but only set within this script
     public ManagerStatus status { get; private set; }
+    private NetworkService _network;
 
     private Dictionary<string, int> _items;
 
-    public void Startup() 
+    public void Startup(NetworkService service) 
     {
         Debug.Log("Inventory manager starting...");
+        _network = service;
 
         _items = new Dictionary<string, int>();
 
