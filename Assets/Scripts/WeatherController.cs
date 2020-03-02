@@ -9,6 +9,13 @@ public class WeatherController : MonoBehaviour
     private float _fullIntensity;
     private float _cloudValue = 0f;
     private bool darker = true;
+    void Awake() 
+    {
+        Messenger.AddListener(GameEvent.WEATHER_UPDATED, OnWeatherUpdated);
+    }
+    void OnDestroy() {
+        Messenger.RemoveListener(GameEvent.WEATHER_UPDATED, OnWeatherUpdated);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -18,18 +25,22 @@ public class WeatherController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetOvercast(_cloudValue);
-        if (darker == true) {
-            _cloudValue += .001f;
-            if (_cloudValue >= 1.0f ) {
-                darker = false;
-            }
-        } else {
-            _cloudValue -= .001f;
-            if (_cloudValue <= 0.0f ) {
-                darker = true;
-            }
-        }
+        // SetOvercast(_cloudValue);
+        // if (darker == true) {
+        //     _cloudValue += .001f;
+        //     if (_cloudValue >= 1.0f ) {
+        //         darker = false;
+        //     }
+        // } else {
+        //     _cloudValue -= .001f;
+        //     if (_cloudValue <= 0.0f ) {
+        //         darker = true;
+        //     }
+        // }
+    }
+    private void OnWeatherUpdated()
+    {
+        SetOvercast(Managers.Weather.cloudValue);
     }
 
     private void SetOvercast(float value)
