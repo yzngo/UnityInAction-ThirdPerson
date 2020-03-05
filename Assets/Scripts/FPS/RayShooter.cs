@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class RayShooter : MonoBehaviour
 {
+    [SerializeField] private AudioSource soundSource;
+    [SerializeField] private AudioClip hitWallSound;
+    [SerializeField] private AudioClip hitEnemySound;
     private Camera _camera;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +24,7 @@ public class RayShooter : MonoBehaviour
         if (Input.GetMouseButtonDown(0) &&
             !EventSystem.current.IsPointerOverGameObject())
         {
-            Vector3 point = new Vector3(_camera.pixelWidth / 2, _camera.pixelHeight / 2, 0);
+            Vector3 point = new Vector3(_camera.pixelWidth / 1.5f, _camera.pixelHeight / 1.5f, 0);
             Ray ray = _camera.ScreenPointToRay(point);
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
@@ -36,11 +39,13 @@ public class RayShooter : MonoBehaviour
                 if(target != null)
                 {
                     target.ReactToHit();
+                    soundSource.PlayOneShot(hitEnemySound);
                     Messenger.Broadcast(GameEvent.ENEMY_HIT);    
                 }
                 else
                 {
                     StartCoroutine(SphereIndicator(hit.point));
+                    soundSource.PlayOneShot(hitWallSound);
                 }
             }
         }
