@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SettingsPopup : MonoBehaviour
 {
+    [SerializeField] private AudioClip sound;
     [SerializeField] private Slider speedSlider;
     // Start is called before the first frame update
     void Start()
@@ -31,4 +32,10 @@ public class SettingsPopup : MonoBehaviour
         // Messenger<float>.Broadcast(GameEvent.SPEED_CHANGED, speed);
         PlayerPrefs.SetFloat("speed", speed);
     }
+    public void OnSoundToggle()
+    {
+        Managers.Audio.soundMute = !Managers.Audio.soundMute;
+        Managers.Audio.PlaySound(clip: sound);
+    }
+    public void OnSoundValue(float volume) => Managers.Audio.soundVolume = volume;
 }

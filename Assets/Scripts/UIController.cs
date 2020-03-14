@@ -28,6 +28,18 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M)) {
+            bool isShowing = settingsPopup.gameObject.activeSelf;
+            settingsPopup.gameObject.SetActive(!isShowing);
+
+            if (isShowing) {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            } else {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
     }
 
     public void OnOpenSetting() {
