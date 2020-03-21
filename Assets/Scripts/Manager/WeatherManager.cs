@@ -29,7 +29,7 @@ public class WeatherManager : MonoBehaviour, IGameManager
         cloudValue = Convert.ToInt32(value) / 100f;
         Debug.Log("Value: " + cloudValue);
 
-        Messenger.Broadcast(GameEvent.WEATHER_UPDATED);
+        Messenger.Broadcast(GameEvent.WEATHER_UPDATED,MessengerMode.DONT_REQUIRE_LISTENER);
         status = ManagerStatus.Started;
     }
     public void OnJsonDataLoaded(string data) {
@@ -40,7 +40,7 @@ public class WeatherManager : MonoBehaviour, IGameManager
         cloudValue = (long)clouds["all"] / 100f;
         Debug.Log("Value: " + cloudValue);
 
-        Messenger.Broadcast(GameEvent.WEATHER_UPDATED);
+        Messenger.Broadcast(GameEvent.WEATHER_UPDATED,MessengerMode.DONT_REQUIRE_LISTENER);
         status = ManagerStatus.Started;
     }
     public void LogWeather(string name)
