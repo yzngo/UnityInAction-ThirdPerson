@@ -29,6 +29,7 @@ public class OrbitCamera : MonoBehaviour
 
     void LateUpdate()
     {
+        //第三人称, 跟随鼠标旋转
         float horInput = Input.GetAxis("Horizontal");
         if(horInput != 0) {
             _rotY += horInput * rotSpeed;
@@ -47,5 +48,12 @@ public class OrbitCamera : MonoBehaviour
         transform.LookAt(target);
         // Vector3 tar = new Vector3( target.position.x, transform.position.y, target.position.z);
         // transform.LookAt( tar );
+
+        //////////////////////////////////////////////////
+        //第三人称, 俯视视角
+        _rotY -= Input.GetAxis("Horizontal") * rotSpeed;
+        Quaternion rotation2 = Quaternion.Euler(0, _rotY, 0);
+        transform.position = target.position - (rotation2 * _offset);
+        transform.LookAt(target);
     }
 }

@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCharacter : MonoBehaviour
+public class InventoryPopup : MonoBehaviour
 {
-    // private int _health;
     // Start is called before the first frame update
     void Start()
     {
-        // _health = 5;
+        
     }
 
     // Update is called once per frame
@@ -17,10 +16,8 @@ public class PlayerCharacter : MonoBehaviour
         
     }
 
-    public void Hurt(int damage)
+    public void Refresh()
     {
-        // _health -= damage;
-        Managers.Player.ChangeHealth( -damage );
-        // Debug.Log("Health: " + _health);
+        
     }
 }

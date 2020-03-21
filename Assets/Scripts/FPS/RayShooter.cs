@@ -13,9 +13,6 @@ public class RayShooter : MonoBehaviour
     void Start()
     {
         _camera = GetComponent<Camera>();
-
-        // Cursor.lockState = CursorLockMode.Locked;
-        // Cursor.visible = false;
     }
     
     // Update is called once per frame

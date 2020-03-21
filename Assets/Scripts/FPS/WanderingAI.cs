@@ -34,6 +34,7 @@ public class WanderingAI : MonoBehaviour
         {
             transform.Translate(0, 0, speed * Time.deltaTime);
             Ray ray = new Ray(transform.position, transform.forward);
+            Debug.DrawRay( transform.position, transform.forward * 100, Color.red );
             if (Physics.SphereCast(ray, 0.75f, out RaycastHit hit))
             {
                 GameObject hitObject = hit.transform.gameObject;

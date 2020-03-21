@@ -18,9 +18,9 @@ public class Fireball : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
-        PlayerCharacter player = other.GetComponent<PlayerCharacter>();
+        PlayerCharacter player = other.transform.GetComponent<PlayerCharacter>();
         
         if(player != null)
         {

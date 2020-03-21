@@ -29,8 +29,9 @@ public class AudioManager : MonoBehaviour, IGameManager
         }
         set {
             _musicVolume = value;
-            if (music1Source != null) {
+            if (music1Source != null & !_crossFading) {
                 music1Source.volume = _musicVolume;
+                music2Source.volume = _musicVolume;
             }
         }
     }
@@ -44,6 +45,7 @@ public class AudioManager : MonoBehaviour, IGameManager
         set {
             if (music1Source != null) {
                 music1Source.mute = value;
+                music2Source.mute = value;
             }
         }
     }
@@ -55,10 +57,14 @@ public class AudioManager : MonoBehaviour, IGameManager
         _network = service;
 
         music1Source.ignoreListenerVolume = true;
+        music2Source.ignoreListenerVolume = true;
         music1Source.ignoreListenerPause = true;
+        music2Source.ignoreListenerPause = true;
 
         soundVolume = 1f;
         musicVolume = 1f;
+        _activeMusic = music1Source;
+        _inactiveMusic = music2Source;
 
         status = ManagerStatus.Started;
     }
@@ -76,12 +82,36 @@ public class AudioManager : MonoBehaviour, IGameManager
     }
     private void PlayMusic(AudioClip clip)
     {
-        music1Source.clip = clip;
-        music1Source.Play();
+        if (_crossFading) {return;}
+        StartCoroutine(CrossFadeMusic(clip));
+    }
+    private IEnumerator CrossFadeMusic(AudioClip clip) {
+        _crossFading = true;
+
+        _inactiveMusic.clip = clip;
+        _inactiveMusic.volume = 0;
+        _inactiveMusic.Play();
+
+        float scaleRate = crossFadeRate * _musicVolume;
+        while (_activeMusic.volume > 0) {
+            _activeMusic.volume -= scaleRate * Time.deltaTime;
+            _inactiveMusic.volume += scaleRate * Time.deltaTime;
+
+            yield return null;
+        }
+
+        AudioSource temp = _activeMusic;
+        _activeMusic = _inactiveMusic;
+        _activeMusic.volume = _musicVolume;
+
+        _inactiveMusic = temp;
+        _inactiveMusic.Stop();
+        _crossFading = false;
     }
     public void StopMusic()
     {
-        music1Source.Stop();
+        _activeMusic.Stop();
+        _inactiveMusic.Stop();
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class ColorChangeDevice : MonoBehaviour
+public class ColorChangeDevice : BaseDevice
 {
     private Renderer _renderer;
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class ColorChangeDevice : MonoBehaviour
         
     }
 
-    public void Operate() {
+    public override void Operate() {
         Color random = new Color(Random.Range(0f, 1f),
                         Random.Range(0f,1f), Random.Range(0f,1f));
         // Color origin = GetComponent<Renderer>().material.color;
