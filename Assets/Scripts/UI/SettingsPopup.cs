@@ -60,4 +60,14 @@ public class SettingsPopup : MonoBehaviour
         Managers.Audio.PlaySound(sound);
     }
     public void OnMusicValue(float volume) => Managers.Audio.musicVolume = volume;
+
+    public void SaveGame() 
+    {
+        Managers.Data.SaveGameState();
+    }
+
+    public void LoadGame()
+    {
+        Managers.Data.LoadGameState();
+    }
 }

@@ -9,22 +9,30 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthLabel;
     [SerializeField] private SettingsPopup settingsPopup;
     [SerializeField] private InventoryPopup inventoryPopup;
+    [SerializeField] private TextMeshProUGUI levelEnding;
 
     private int _score;
     void Awake() 
     {
         Messenger.AddListener(GameEvent.ENEMY_HIT, OnEnemyHit);
         Messenger.AddListener(GameEvent.HEALTH_UPDATED, OnHelathUpdated);
+        Messenger.AddListener(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+        Messenger.AddListener(GameEvent.LEVEL_FAILED, OnLevelFailed);
+        Messenger.AddListener(GameEvent.GAME_COMPLETE, OnGameComplete);
     } 
     void OnDestroy() 
     {
         Messenger.RemoveListener(GameEvent.ENEMY_HIT, OnEnemyHit);
         Messenger.RemoveListener(GameEvent.HEALTH_UPDATED, OnHelathUpdated);
+        Messenger.RemoveListener(GameEvent.LEVEL_COMPLETE, OnLevelComplete);
+        Messenger.RemoveListener(GameEvent.LEVEL_FAILED, OnLevelFailed);
+        Messenger.RemoveListener(GameEvent.GAME_COMPLETE, OnGameComplete);
     }
     // Start is called before the first frame update
     void Start()
     {
         OnHelathUpdated();
+        levelEnding.gameObject.SetActive(false);
         _score = 0;
         scoreLabel.text = _score.ToString();
         settingsPopup.Close();
@@ -68,4 +76,38 @@ public class UIController : MonoBehaviour
         string message = "Health: " + Managers.Player.health + "/" + Managers.Player.maxHealth;
         healthLabel.text = message;
     }
+    private void OnLevelComplete()
+    {
+        StartCoroutine(CompleteLevel());
+    }
+    private IEnumerator CompleteLevel()
+    {
+        levelEnding.gameObject.SetActive(true);
+        levelEnding.text = "Level Complete!";
+
+        yield return new WaitForSeconds(2);
+
+        Managers.Mission.GoToNext();
+    }
+
+    private void OnLevelFailed() 
+    {
+        StartCoroutine(FailLevel());
+    }
+
+    private IEnumerator FailLevel()
+    {
+        levelEnding.gameObject.SetActive(true);
+        levelEnding.text = "Level Failed";
+        yield return new WaitForSeconds(2);
+        Managers.Player.Respawn();
+        Managers.Mission.RestartCurrent();
+    }
+
+    private void OnGameComplete()
+    {
+        levelEnding.gameObject.SetActive(true);
+        levelEnding.text = "You Finished the Game !";
+    }
+
 }
